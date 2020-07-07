@@ -7,6 +7,19 @@ class SortBox extends React.Component {
         super(props);
         this.state = {
             artist: this.props.router.query.artistName,
+            songs: [
+                "hit",
+                "lie again",
+                "fear",
+                "let me hear you say",
+                "247",
+                "second life",
+                "network love",
+                "back it up",
+                "lucky",
+                "snap shoot",
+                "happy ending",
+            ],
         };
     }
     render() {
