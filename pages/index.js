@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Router from 'next/router';
 
 export default class Home extends React.Component {
@@ -17,10 +16,10 @@ export default class Home extends React.Component {
     this.setState({artist: event.target.value});
   }
 
-  handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.artist);
-    event.preventDefault();
-  }
+  // handleSubmit(event) {
+  //   alert('A name was submitted: ' + this.state.artist);
+  //   event.preventDefault();
+  // }
 
   render() {
     return (
@@ -39,17 +38,15 @@ export default class Home extends React.Component {
             Input your artist's name below.
           </p>
 
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Artist:
-              <input type="text" value={this.state.artist} onChange={this.handleChange} />
-            </label>
-            <input type="submit" value="Submit" onClick={() => Router.push('/sort')} />
-          </form>
+          <label>
+            Artist:
+            <input type="text" value={this.state.artist} onChange={this.handleChange} />
+          </label>
+          <input type="submit" value="Submit" onClick={() => Router.push({pathname: '/sort', query: { artistName: this.state.artist }})} />
 
         </main>
 
-        <footer>
+        {/* <footer>
           <a
             href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
             target="_blank"
@@ -58,13 +55,8 @@ export default class Home extends React.Component {
             Powered by{' '}
             <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
           </a>
-        </footer>
+        </footer> */}
       </div>
     );
   }
 }
-
-// ReactDOM.render(
-//   <Home />,
-//   document.getElementById('root')
-// );

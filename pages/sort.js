@@ -1,8 +1,16 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import { withRouter } from 'next/router'
 
-export default class SortBox extends React.Component {
+class SortBox extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            artist: this.props.router.query.artistName,
+        };
+    }
     render() {
+        const msg = "Pick songs for " + this.state.artist;
         return (
             <div className="container">
                 <Head>
@@ -15,10 +23,12 @@ export default class SortBox extends React.Component {
                     </h1>
 
                     <p className="description">
-                        pick songs
+                        {msg}
                     </p>
                 </main>
             </div>
         );
     }
 }
+
+export default withRouter(SortBox)
