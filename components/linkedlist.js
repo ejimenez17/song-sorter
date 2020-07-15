@@ -1,13 +1,13 @@
 // LinkedList class
 
-export default class ListNode {
+export class ListNode {
     constructor(value) {
         this.value = value;
         this.next = null;
     }
 }
 
-export default class LinkedList {
+export class LinkedList {
     constructor() {
         this.head = null;
         this.size = 0;
