@@ -7,7 +7,7 @@ export class ListNode {
     }
 }
 
-export class LinkedList {
+export class MyLinkedList {
     constructor() {
         this.head = null;
         this.size = 0;
@@ -15,7 +15,7 @@ export class LinkedList {
 
     add(element) {
         if (this.head == null) {
-            this.head = element;
+            this.head = new ListNode(element);
         } else {
             var currNode = this.head;
 
@@ -30,6 +30,7 @@ export class LinkedList {
     }
 
     get(i) {
+        // console.log(i);
         if (i >= this.size) {
             throw "Index out of bounds";
         } else {
@@ -41,7 +42,9 @@ export class LinkedList {
                 count++;
             }
 
-            return currNode;
+            // console.log(currNode.value);
+
+            return currNode.value;
         }
     }
 

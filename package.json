@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "next": "9.3.5",
+    "promise-do-until": "^1.0.0",
+    "promise-do-whilst": "^1.0.1",
     "react": "16.13.1",
     "react-dom": "16.13.1"
   }
