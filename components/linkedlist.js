@@ -19,7 +19,7 @@ export class MyLinkedList {
         } else {
             var currNode = this.head;
 
-            while (currNode.value != element) {
+            while (currNode.next != null) {
                 currNode = currNode.next;
             }
 
@@ -30,7 +30,6 @@ export class MyLinkedList {
     }
 
     get(i) {
-        // console.log(i);
         if (i >= this.size) {
             throw "Index out of bounds";
         } else {
@@ -39,10 +38,8 @@ export class MyLinkedList {
 
             while (count < i) {
                 currNode = currNode.next;
-                count++;
+                ++count;
             }
-
-            // console.log(currNode.value);
 
             return currNode.value;
         }

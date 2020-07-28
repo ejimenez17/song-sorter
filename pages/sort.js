@@ -39,31 +39,27 @@ class SortBox extends React.Component {
         // };
     }
 
-    shouldComponentUpdate(nextProps) {
-        if(nextProps.leftSong !== this.state.leftSong || nextProps.rightSong !== this.state.rightSong) {
-            this.setState({
-                leftSong: nextProps.leftSong,
-                rightSong: nextProps.rightSong,
-            });
-            return true;
-        }
-        return false;
-    }
+    // shouldComponentUpdate(nextProps) {
+    //     if(nextProps.leftSong !== this.state.leftSong || nextProps.rightSong !== this.state.rightSong) {
+    //         this.setState({
+    //             leftSong: nextProps.leftSong,
+    //             rightSong: nextProps.rightSong,
+    //         });
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
     // componentDidMount() {
     //     let response = this.insertSort();
-    //     console.log(response);
     // }
 
     handleUserChoice() {
-        // console.log(newLeftSong);
-        // console.log(newRightSong);
         // this.setState({
         //     leftSong: newLeftSong,
         //     rightSong: newRightSong,
         // });
         // document.getElementById("sortSongBoxLeft").innerHTML = this.state.leftSong;
-        // console.log("changed left & right");
         while (this.state.userPref === this.state.preference.WAITING) {
             console.log("waiting for user input");
         }
@@ -85,6 +81,7 @@ class SortBox extends React.Component {
 
         // grab user pref and set state value to null again
         let currentUserPref = this.state.userPref;
+        console.log("current user pref " + currentUserPref);
         this.setState({
             userPref: this.state.preference.WAITING,
         });
@@ -98,12 +95,14 @@ class SortBox extends React.Component {
             // leftSong: "BLAH",
             userPref: this.state.preference.LEFT,
         });
+        document.getElementById("sortSongBoxLeft").innerHTML = "LEFT AN";
     }
     handleRightClick() {
         this.setState({
             // rightSong: "YEAH",
             userPref: this.state.preference.RIGHT,
         });
+        document.getElementById("sortSongBoxRight").innerHTML = "RIIGHT";
     }
     handleBothClick() {
         this.setState({
@@ -111,11 +110,10 @@ class SortBox extends React.Component {
         });
     }
 
-    insertSort(){
+    async insertSort(){
         console.log("begin sorting");
         let sortedList = new MyLinkedList();
         for (let i = 0; i < this.state.songs.length; i++) {
-            // songToPlace in this.state.songs) {
             let songToPlace = this.state.songs[i];
             if (i == 0) {
                 sortedList.add(songToPlace);
@@ -125,33 +123,43 @@ class SortBox extends React.Component {
             let start = 0;
             let end = sortedList.size;
             let insertIndex = Math.floor((end - start) / 2) + start;
+            
             console.log("place song " + songToPlace);
             while (start <= end) {
+                // console.log("insert index: " + insertIndex);
                 // current song is always on LEFT
+                var songToCompare = sortedList.get(insertIndex);
+                console.log("compare " + songToCompare + " with " + songToPlace);
                 this.setState({
                     leftSong: songToPlace,
-                    rightSong: sortedList.get(insertIndex),
+                    rightSong: songToCompare,
                 });
-                console.log("set state done");
-                let userPref = this.handleUserChoice().bind(this);
+                document.getElementById("sortSongBoxLeft").innerHTML = songToPlace;
+                document.getElementById("sortSongBoxRight").innerHTML = songToCompare;
+
+                this.forceUpdate();
+                
+                console.log(document.getElementById("sortSongBoxLeft").innerHTML);
+                let userPref = this.handleUserChoice();
+                console.log("user's pref is " + userPref);
                 switch(userPref) {
                     case this.state.preference.LEFT:
                         // code - shift indexes accordingly
                         if (start == end) {
-                            sortedList.insertAt(songToPlace, insertIndex, false);
+                            sortedList.insert(songToPlace, insertIndex, false);
                             break;
                         }
                         end = insertIndex - 1;
                     case this.state.preference.RIGHT:
                         // code - shift indexes accordingly
-                        if (start == end) {
-                            sortedList.insertAt(songToPlace, insertIndex+1, false);
+                        if (start == end || sortedList.size == 1) {
+                            sortedList.insert(songToPlace, insertIndex+1, false);
                             break;
                         }
                         start = insertIndex + 1;
                     case this.state.preference.BOTH:
                         // code - insert here addToIndex = true
-                        sortedList.insertAt(songToPlace, insertIndex, true);
+                        sortedList.insert(songToPlace, insertIndex, true);
                         break;
                 }
                 insertIndex = Math.floor((end - start) / 2) + start;
