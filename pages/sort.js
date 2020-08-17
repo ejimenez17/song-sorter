@@ -129,63 +129,6 @@ class SortBox extends React.Component {
         });
     }
 
-    // async insertSort(){
-    //     console.log("begin sorting");
-    //     let sortedList = new MyLinkedList();
-    //     for (let i = 0; i < this.state.songs.length; i++) {
-    //         let songToPlace = this.state.songs[i];
-    //         if (i == 0) {
-    //             sortedList.add(songToPlace);
-    //             console.log("add song " + songToPlace);
-    //             continue;
-    //         }
-    //         let start = 0;
-    //         let end = sortedList.size;
-    //         let insertIndex = Math.floor((end - start) / 2) + start;
-            
-    //         console.log("place song " + songToPlace);
-    //         while (start <= end) {
-    //             // current song is always on LEFT
-    //             var songToCompare = sortedList.get(insertIndex);
-    //             console.log("compare " + songToCompare + " with " + songToPlace);
-    //             this.setState({
-    //                 leftSong: songToPlace,
-    //                 rightSong: songToCompare,
-    //             });
-    //             document.getElementById("sortSongBoxLeft").innerHTML = songToPlace;
-    //             document.getElementById("sortSongBoxRight").innerHTML = songToCompare;
-
-    //             this.forceUpdate();
-                
-    //             console.log(document.getElementById("sortSongBoxLeft").innerHTML);
-    //             let userPref = this.handleUserChoice();
-    //             console.log("user's pref is " + userPref);
-    //             switch(userPref) {
-    //                 case this.state.preference.LEFT:
-    //                     // code - shift indexes accordingly
-    //                     if (start == end) {
-    //                         sortedList.insert(songToPlace, insertIndex, false);
-    //                         break;
-    //                     }
-    //                     end = insertIndex - 1;
-    //                 case this.state.preference.RIGHT:
-    //                     // code - shift indexes accordingly
-    //                     if (start == end || sortedList.size == 1) {
-    //                         sortedList.insert(songToPlace, insertIndex+1, false);
-    //                         break;
-    //                     }
-    //                     start = insertIndex + 1;
-    //                 case this.state.preference.BOTH:
-    //                     // code - insert here addToIndex = true
-    //                     sortedList.insert(songToPlace, insertIndex, true);
-    //                     break;
-    //             }
-    //             insertIndex = Math.floor((end - start) / 2) + start;
-    //         }
-    //     }
-    //     return sortedList;
-    // }
-
     render() {
         const msg = "Pick songs for " + this.state.artist;
         return (
