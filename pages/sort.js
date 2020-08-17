@@ -39,55 +39,71 @@ class SortBox extends React.Component {
 
     // when a song box is clicked - change state value for user click
     handleLeftClick() {
-        this.setState({
-            userPref: this.state.preference.LEFT,
+        this.setState({userPref: this.state.preference.LEFT}, () => {
+            this.handleClickUpdate();
         });
-        this.handleClickUpdate();
     }
     handleRightClick() {
-        this.setState({
-            userPref: this.state.preference.RIGHT,
+        this.setState({userPref: this.state.preference.RIGHT}, () => {
+            this.handleClickUpdate();
         });
-        this.handleClickUpdate();
     }
     handleBothClick() {
-        this.setState({
-            userPref: this.state.preference.BOTH,
+        this.setState({userPref: this.state.preference.BOTH}, () => {
+            this.handleClickUpdate();
         });
-        this.handleClickUpdate();
     }
 
     handleClickUpdate() {
         let pref = this.state.userPref;
         let sortedArray = this.state.sortedArray.slice(0,this.state.sortedArray.length);
         let songToPlace = this.state.songs[this.state.currentSongIndex];
-        let newStart, newEnd, newInsertIndex, leftSong, rightSong;
-        if (this.state.start == this.state.end) {
+        let newStart = this.state.start;
+        let newEnd = this.state.end;
+        let newInsertIndex, leftSong, rightSong;
+        let newCurrentSongIndex = this.state.currentSongIndex;
+        if (this.state.start == this.state.insertIndex || this.state.start == this.state.end) {
             // insert song
             switch(pref) {
                 case this.state.preference.LEFT:
                     sortedArray.splice(this.state.insertIndex, 0, songToPlace);
+                    // console.log(songToPlace + " PLACED at index " + this.state.insertIndex);
+                    break;
                 case this.state.preference.RIGHT:
                     sortedArray.splice(this.state.insertIndex+1, 0, songToPlace);
+                    // console.log(songToPlace + " PLACED at index " + (this.state.insertIndex+1));
+                    break;
+                default:
+                    console.log("DEFAULT");
             }
             // reset indices + update displayed songs
             newStart = 0;
-            newEnd = sortedArray.length;
-            leftSong = this.state.songs[this.state.currentSongIndex + 1];
+            newEnd = sortedArray.length-1;
+            newCurrentSongIndex = this.state.currentSongIndex + 1;
+            leftSong = this.state.songs[newCurrentSongIndex];
         } else {
+            // console.log("user pref: " + pref);
+            // console.log(pref == this.state.preference.LEFT);
+            // console.log(pref == this.state.preference.RIGHT);
             switch(pref) {
                 case this.state.preference.LEFT:
                     newEnd = this.state.insertIndex - 1;
+                    break
                 case this.state.preference.RIGHT:
                     newStart = this.state.insertIndex + 1;
+                    break;
+                default:
+                    console.log("DEFAULT");
             }
             leftSong = this.state.leftSong;
         }
+        // console.log("new start: " + newStart);
+        // console.log("new end: " + newEnd);
         newInsertIndex = Math.floor((newEnd - newStart) / 2) + newStart;
+        // console.log("new iI: " + newInsertIndex);
         rightSong = sortedArray[newInsertIndex];
-        console.log(rightSong);
         this.setState({
-            currentSongIndex: this.state.currentSongIndex + 1,
+            currentSongIndex: newCurrentSongIndex,
             end: newEnd,
             insertIndex: newInsertIndex,
             leftSong: leftSong,
@@ -95,21 +111,20 @@ class SortBox extends React.Component {
             start: newStart,
             sortedArray: sortedArray,
         });
+        // console.log("set songs");
+        // console.log("left: " + leftSong + " at index: ");
+        // console.log("right: " + rightSong + " at index: " + newInsertIndex);
     }
 
     handleBeginSort() {
         // [fetch songs from spotify]
         let sortedArray = this.state.sortedArray.slice(0, 1);
         sortedArray[0] = this.state.songs[this.state.currentSongIndex];
-        const start = 0;
-        const end = sortedArray.size;
+
         this.setState({
             currentSongIndex: 1,
-            end: end,
-            insertIndex: Math.floor((end - start) / 2) + start,
             leftSong: this.state.songs[1],
             rightSong: sortedArray[0],
-            start: start,
             sortedArray: sortedArray,
         });
     }
