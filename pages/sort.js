@@ -1,8 +1,14 @@
 import Head from 'next/head'
 import { withRouter } from 'next/router'
-import {MyLinkedList} from '../components/linkedlist'
 
 class SortBox extends React.Component {
+    preference = {
+        LEFT: 'left',
+        RIGHT: 'right',
+        BOTH: 'both',
+        WAITING: 'waiting',
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -11,12 +17,6 @@ class SortBox extends React.Component {
             end: 0,
             insertIndex: 0,
             leftSong: "song 1",
-            preference: {
-                LEFT: 'left',
-                RIGHT: 'right',
-                BOTH: 'both',
-                WAITING: 'waiting',
-            },
             start: 0,
             songs: [
                 "hit",
@@ -39,17 +39,17 @@ class SortBox extends React.Component {
 
     // when a song box is clicked - change state value for user click
     handleLeftClick() {
-        this.setState({userPref: this.state.preference.LEFT}, () => {
+        this.setState({userPref: this.preference.LEFT}, () => {
             this.handleClickUpdate();
         });
     }
     handleRightClick() {
-        this.setState({userPref: this.state.preference.RIGHT}, () => {
+        this.setState({userPref: this.preference.RIGHT}, () => {
             this.handleClickUpdate();
         });
     }
     handleBothClick() {
-        this.setState({userPref: this.state.preference.BOTH}, () => {
+        this.setState({userPref: this.preference.BOTH}, () => {
             this.handleClickUpdate();
         });
     }
@@ -65,11 +65,11 @@ class SortBox extends React.Component {
         if (this.state.start == this.state.insertIndex || this.state.start == this.state.end) {
             // insert song
             switch(pref) {
-                case this.state.preference.LEFT:
+                case this.preference.LEFT:
                     sortedArray.splice(this.state.insertIndex, 0, songToPlace);
                     // console.log(songToPlace + " PLACED at index " + this.state.insertIndex);
                     break;
-                case this.state.preference.RIGHT:
+                case this.preference.RIGHT:
                     sortedArray.splice(this.state.insertIndex+1, 0, songToPlace);
                     // console.log(songToPlace + " PLACED at index " + (this.state.insertIndex+1));
                     break;
@@ -86,10 +86,10 @@ class SortBox extends React.Component {
             // console.log(pref == this.state.preference.LEFT);
             // console.log(pref == this.state.preference.RIGHT);
             switch(pref) {
-                case this.state.preference.LEFT:
+                case this.preference.LEFT:
                     newEnd = this.state.insertIndex - 1;
                     break
-                case this.state.preference.RIGHT:
+                case this.preference.RIGHT:
                     newStart = this.state.insertIndex + 1;
                     break;
                 default:
